@@ -407,23 +407,27 @@
         // Function for sending reactions to the server
         async function sendReaction(emoji) {
             const playerToSend = isLocal ? currentVisualPlayer : currentUser;
+            
             try {
                 const response = await fetch(`/api/proxy/match/${matchId}/react`, {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({ player: playerToSend, reaction: emoji })
+                    body: JSON.stringify({ 
+                        player: playerToSend, 
+                        reaction: emoji 
+                    })
                 });
+                
                 if (response.ok) {
-                    // Show the reaction immediately
+                    // Esto muestra el emoji localmente al instante para dar feedback
                     displayReaction(playerToSend, emoji);
                 } else {
-                    const result = await response.json();
-                    console.error("Error sending reaction:", result.error);
+                    console.error("Error en el servidor al enviar reacción");
                 }
             } catch (error) {
-                console.error("Error sending reaction:", error);
+                console.error("Error de red al enviar reacción:", error);
             }
-        }
+        } 
 
         function displayReaction(player, reactionContent) {
             // Determinar si la reacción es del jugador actual o del oponente

@@ -334,6 +334,14 @@ def proxy_play(match_id):
     resp = api_request("POST", f"/matches/{match_id}/play", data=data, token=session['token'])
     return resp.json(), resp.status_code
 
+@app.route('/api/proxy/match/<match_id>/react', methods=['POST'])
+def proxy_react(match_id):
+    if 'token' not in session: return {"error": "Unauthorized"}, 401
+    data = request.get_json()
+    # Enviamos la reacción al API Gateway para que llegue al match-service
+    resp = api_request("POST", f"/matches/{match_id}/react", data=data, token=session['token'])
+    return resp.json(), resp.status_code
+
 @app.route('/matchmaking/join', methods=['POST'])
 def matchmaking_join():
     if 'token' not in session: return redirect(url_for('index'))
