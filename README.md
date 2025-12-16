@@ -1,59 +1,3 @@
-Preguntar por el tem de la base de datos El proyecto original es Flask/Python (microservicios con Docker)
-- Este entorno de v0 es Next.js/React, no Flask
-- No hay base de datos configurada actualmente
-
-El proyecto original incluía:
-
-- 40 cartas españolas (Oros, Copas, Espadas, Bastos)
-- Un servicio de backend en Python/Flask
-- Base de datos PostgreSQL (según el docker-compose.yml)
-- Frontend Flask que muestra las cartas
-La interfaz no se por que no me va
-
-Cosas comprobadas de los casos de uso :
-create an account - Si
-login into the game - Si
-check/modify my profile - Si
-be safe about my account data - Creo que si
-see the overall card collection - Si
-view the details of a card - 1. Si, check if they like it
-start a new game - Si
-select the subset of cards - Si
-select a card - Si
-know the score - si
-know the turns - si
-see the score -su
-know who won the turn - si
-know who won a match -si
-that the rules are not violated - si
-view the list of my old matches - si
-view the details of one of my matches - si
-view the leaderboards - si entre amigos
-prevent people to tamper my old matches - 2.no lo se a q se refiere
-
-Green: 
-the timer of the move - si
-who's turn it is  - si
-see which cards I have and which cards I have to play - no
-to be able to see the cards in my hand - si
-I want set a maximum playing time - no 
-I want to join a tournument - no
-play against a bot - yes
-request to a rematch - yes
-I want to send a battle invitation - yes
-to able to surrender - yes
-be able to ask for a rematch - yes
-I want to receive one hint per game - no
-I want to distinguish ranked or friendly matches - no
-I wanto to play locally - si
-I want to use emojis during the match - si, solo emojis no se si quieren mas
-add friends - yes
-view my firends list - si
-remove a firend from my friends list - si
-view my friend matches - no
-unlock achievements/objective - no pero se podria hacer, ganas new emojis,avatar
-
-
 # FinalASEProject1 - La Escoba Card Game
 
 A **La Escoba** card game platform (classic Spanish card game) with **microservices architecture**. The project includes a web frontend, API Gateway, and multiple specialized services deployed with Docker.
@@ -61,12 +5,12 @@ A **La Escoba** card game platform (classic Spanish card game) with **microservi
 ## Overview
 
 **La Escoba** is a traditional Spanish card game for 2-4 players. In this version:
-- ♠️ Played with a Spanish deck (40 cards: 4 suits, values 1-7, jack, knight, king)
-- 🎮 Support for playing against CPU, local (Guest), or against other players
-- 👥 Friend system and challenges between players
-- 📊 Global leaderboard and personal statistics
-- 🔐 Secure authentication with JWT and encrypted passwords
-- ⚡ Scalable microservices architecture
+- Played with a Spanish deck (40 cards: 4 suits, values 1-7, jack, knight, king)
+- Support for playing against CPU, local (Guest), or against other players
+- Friend system and challenges between players
+- Global leaderboard and personal statistics
+- Secure authentication with JWT and encrypted passwords
+- Scalable microservices architecture
 
 ## Architecture
 
@@ -104,7 +48,7 @@ The project uses a **microservices architecture** with the following components:
 
 ### Installation and Execution
 
-\`\`\`bash
+```bash
 # Clone the repository
 git clone <repo-url>
 cd FinalASEProject1
@@ -115,7 +59,7 @@ docker-compose up --build
 # The application will be available at:
 # - Frontend: http://localhost:8080
 # - API Gateway: https://localhost:5000
-\`\`\`
+```
 
 ### Environment Variables
 
@@ -133,7 +77,7 @@ Access at: http://localhost:8080/admin
 
 ## Directory Structure
 
-\`\`\`
+```
 FinalASEProject1/
 ├── services/
 │   ├── api-gateway/           # Central proxy (Flask)
@@ -153,7 +97,7 @@ FinalASEProject1/
 ├── tests/                      # Tests and performance (Locust, Postman)
 ├── docker-compose.yml         # Container configuration
 └── package.json               # (Frontend Next.js - optional)
-\`\`\`
+```
 
 ## Key Concepts of La Escoba
 
@@ -242,7 +186,7 @@ See complete specification in `/docs/openapi/openapi.yaml`
 ## Development
 
 ### Running Services Locally (without Docker)
-\`\`\`bash
+```bash
 # Terminal 1: PostgreSQL
 docker run -e POSTGRES_PASSWORD=password123 -p 5432:5432 postgres:15
 
@@ -253,22 +197,22 @@ docker run -p 6379:6379 redis:7
 cd services/auth-service
 pip install -r requirements.txt
 python app.py
-\`\`\`
+```
 
 ### Testing
-\`\`\`bash
+```bash
 # Load testing with Locust
 cd tests/locust
 locust -f locustfile.py --host=https://localhost:5000
 
 # Postman collection available in tests/postman/
-\`\`\`
+```
 
 ### Generate SSL Certificates (if needed)
-\`\`\`bash
+```bash
 cd certs
 openssl req -x509 -newkey rsa:4096 -nodes -out cert.pem -keyout key.pem -days 365
-\`\`\`
+```
 
 ## Project Statistics
 
