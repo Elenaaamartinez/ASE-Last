@@ -6,6 +6,7 @@ requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 app = Flask(__name__)
 app.secret_key = 'frontend_secret_key'
+debug_mode = os.environ.get('FLASK_DEBUG', 'False').lower() == 'true'
 
 API_GATEWAY = "https://api-gateway:5000"
 
@@ -482,4 +483,4 @@ def admin_dashboard():
                            service_status=service_status)
     
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    app.run(debug=debug_mode, host='0.0.0.0', port=5000)

@@ -8,6 +8,7 @@ from functools import wraps
 import re
 
 app = Flask(__name__)
+debug_mode = os.environ.get('FLASK_DEBUG', 'False').lower() == 'true'
 
 # --- Configuration for Database and Secret Key ---
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
@@ -177,4 +178,4 @@ def update_user(current_user):
         return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    app.run(debug=debug_mode, host='0.0.0.0', port=5000)
