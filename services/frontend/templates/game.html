@@ -246,6 +246,9 @@
                         document.getElementById('friend-input').value = oppName;
                         document.getElementById('friend-form').style.display = 'block';
                     }
+                    setTimeout(() => {
+                        window.location.href = "/dashboard";
+                    }, 1000);
 
                     return;
                 }
@@ -439,9 +442,7 @@
         }
 
         function startTimer(startTimeString) {
-            if (timerInterval) {
-                clearInterval(timerInterval);
-            }
+            if (timerInterval) clearInterval(timerInterval);
             
             const timerDiv = document.getElementById('turn-timer');
             const timerValueSpan = document.getElementById('timer-value');
@@ -453,27 +454,29 @@
 
             timerDiv.style.display = 'block';
             
-            // Parse the start time 
-            turnStartTime = new Date(startTimeString);
+            // Forzar que la cadena se interprete como UTC añadiendo una 'Z' si no la tiene
+            let isoString = startTimeString;
+            if (!isoString.endsWith('Z')) isoString += 'Z';
+            turnStartTime = new Date(isoString);
 
             function updateTimerDisplay() {
-                const now = new Date();
-                const elapsedMilliseconds = now - turnStartTime;
+                const now = new Date(); // Esto da la hora actual en local
+                // Convertimos 'now' a milisegundos UTC para la comparacion
+                const nowUTC = now.getTime() + (now.getTimezoneOffset() * 60000);
+                // O más simple, usar el valor absoluto de la resta si los objetos Date están bien formados:
+                const elapsedMilliseconds = Math.abs(now - turnStartTime);
                 
-                if (elapsedMilliseconds < 0) {
-                    timerValueSpan.innerText = '00:00';
-                    return;
-                }
-
                 const totalSeconds = Math.floor(elapsedMilliseconds / 1000);
                 const minutes = Math.floor(totalSeconds / 60);
                 const seconds = totalSeconds % 60;
 
-                const formattedTime = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+                // Si el desfase sigue ocurriendo, forzamos a que solo muestre minutos menores a 60
+                const minutesDisplay = minutes % 60; 
+
+                const formattedTime = `${String(minutesDisplay).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
                 timerValueSpan.innerText = formattedTime;
             }
 
-            // Update immediately and then every second
             updateTimerDisplay();
             timerInterval = setInterval(updateTimerDisplay, 1000); 
         }
